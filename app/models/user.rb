@@ -7,11 +7,14 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   validates :email, uniqueness: true #一意性であること
   validates :birthday, presence: true
-  validates :password, confirmation: true #パスワードは、確認用を含めて2回入力すること
+  
 
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: '全角文字を使用してください' } do
     validates :first_name
     validates :family_name
+  end
+
+  with_options presence: true, format: { with: /\A[ァ-ン]+\z/, message: '全角（カタカナ）を使用してください' } do
     validates :first_name_kana
     validates :family_name_kana
   end
