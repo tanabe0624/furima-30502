@@ -1,11 +1,8 @@
 window.addEventListener('load', () => {
-  console.log("OK");
-
   //constも発火条件が必要
   const priceInput = document.getElementById("item-price");
   priceInput.addEventListener("input", () => {
     const inputValue = priceInput.value;
-    console.log(inputValue);
 
     const addTaxDom = document.getElementById("add-tax-price")
     addTaxDom.innerHTML = Math.floor(inputValue * 0.1);
@@ -14,6 +11,5 @@ window.addEventListener('load', () => {
     profitDom.innerHTML = Math.floor(inputValue * 0.9);
 
   })
-  
 });
 
