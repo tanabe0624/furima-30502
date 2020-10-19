@@ -125,12 +125,13 @@
     <h2 class='title'>ピックアップカテゴリー</h2>
     <%= link_to '新規投稿商品', new_item_path, class: "subtitle" %>
     <ul class='item-lists'>
+    <% if @items.present? %>
       <% @items.each do |item| %>
       <li class='list'>
         <%= link_to "#" do %>
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" if item.image.attached? %>
-          
+
           <%# 商品購入機能実装後に実装する%>
           <%# 商品が売れていればsold outを表示しましょう %>
           <%# <div class='sold-out'>
@@ -153,6 +154,8 @@
         </div>
         <% end %>
       </li>
+    <% end %>
+
       <% unless @items.exists? %>
       <ul class='item-lists'>
         <li class='list'>
