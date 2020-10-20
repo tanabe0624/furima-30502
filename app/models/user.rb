@@ -5,9 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :nickname, presence: true
-  validates :email, uniqueness: true #一意性であること
+  validates :email, uniqueness: true # 一意性であること
   validates :birthday, presence: true
-  
 
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: '全角文字を使用してください' } do
     validates :first_name
@@ -20,9 +19,8 @@ class User < ApplicationRecord
   end
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  validates_format_of :password, with: PASSWORD_REGEX, message: 'には英字と数字の両方を含めて設定してください' 
-  #上記２行でパスワードは、半角英数字混合での入力が必須であることの実装
+  validates_format_of :password, with: PASSWORD_REGEX, message: 'には英字と数字の両方を含めて設定してください'
+  # 上記２行でパスワードは、半角英数字混合での入力が必須であることの実装
 
   has_many :items
 end
-
