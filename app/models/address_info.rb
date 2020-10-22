@@ -1,13 +1,14 @@
 class AddressInfo
   include ActiveModel::Model
-  attr_accessor :zip_code, :prefectures_id, :city, :street_number, :building, :phone_number, :user_id, :item_id
+  attr_accessor :zip_code, :prefectures_id, :city, :street_number, :building, :phone_number, :user_id, :item_id, :token
 
   with_options presence: true do
     validates :zip_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :prefectures_id, numericality: { other_than: 0, message: "can't be blank" }
-    validates :city, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: "is invalid. Input full-width characters."}
+    validates :prefectures_id, numericality: { other_than: 1 }
+    validates :city, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/ }
     validates :street_number
     validates :phone_number, format: {with: /\A\d{11}\z/}
+    validates :token, presence: true
   end
 
   def save
