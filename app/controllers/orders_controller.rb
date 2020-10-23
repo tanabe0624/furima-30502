@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
+  before_action :set_item, only: [:index, :create, :move_to_root_path]
   before_action :move_to_root_path, only: :index
   before_action :authenticate_user!, only: :index
-  before_action :set_item, only: :index
 
   def index
     @address_info = AddressInfo.new
   end
 
   def create 
-    @item = Item.find(params[:item_id])#ordersのルーティングはネストされているから[:id]だけでなく、親のitemもくっつけて書く必要がある
     @address_info = AddressInfo.new(info_params)
     if @address_info.valid?
       pay_item
@@ -26,10 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def set_item
-    if current_user.id == @item.user.id
-      redirect_to root_path 
-    end
-    @item = Item.find(params[:item_id]) 
+    @item = Item.find(params[:item_id]) #ordersのルーティングはネストされているから[:id]だけでなく、親のitemもくっつけて書く必要がある
   end
 
   def pay_item
@@ -42,9 +38,6 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root_path
-    @item = Item.find(params[:item_id])
-    if @item.order
-      redirect_to root_path
-    end
+    return redirect_to root_path if @item.order || current_user.id == @item.user.id
   end
 end
