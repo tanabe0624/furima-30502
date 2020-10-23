@@ -23,4 +23,5 @@ class User < ApplicationRecord
   # 上記２行でパスワードは、半角英数字混合での入力が必須であることの実装
 
   has_many :items
+  has_many :orders
 end
