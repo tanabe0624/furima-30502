@@ -12,6 +12,10 @@ RSpec.describe AddressInfo, type: :model do
     it 'すべての値が正しく入力されていれば保存できること' do
       expect(@address_info).to be_valid
     end
+    it 'buildingは空でも保存できること' do
+      @address_info.building = nil
+      expect(@address_info).to be_valid
+    end
     it 'zip_codeが空だと保存できないこと' do
       @address_info.zip_code = nil
       @address_info.valid?
@@ -42,14 +46,15 @@ RSpec.describe AddressInfo, type: :model do
       @address_info.valid?
       expect(@address_info.errors.full_messages).to include("Street number can't be blank")
     end
-    it 'buildingは空でも保存できること' do
-      @address_info.building = nil
-      expect(@address_info).to be_valid
-    end
     it 'phone_numberが空だと保存できないこと' do
       @address_info.phone_number = nil
       @address_info.valid?
       expect(@address_info.errors.full_messages).to include("Phone number can't be blank")
+    end
+    it 'phone_numberが12桁以上だと保存できないこと' do
+      @address_info.phone_number = "090123456789"
+      @address_info.valid?
+      expect(@address_info.errors.full_messages).to include("Phone number is invalid")
     end
     it 'phone_numberにハイフンが含まれていると保存できないこと' do
       @address_info.phone_number = "090-1234-5678"
@@ -60,7 +65,6 @@ RSpec.describe AddressInfo, type: :model do
       @address_info.token = nil
       @address_info.valid?
       expect(@address_info.errors.full_messages).to include("Token can't be blank")
-   
     end
   end
 end
